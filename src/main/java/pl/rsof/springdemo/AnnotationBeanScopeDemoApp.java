@@ -21,10 +21,22 @@ public class AnnotationBeanScopeDemoApp {
 		ClassPathXmlApplicationContext applicationContext = new ClassPathXmlApplicationContext("applicationContext.xml");
 		
 		
-		Coach coach = applicationContext.getBean("tennisCoach", Coach.class);
+		Coach coach1 = applicationContext.getBean("tennisCoach", Coach.class);
 		
-		System.out.println(coach.getDailyWorkout());
-		System.out.println(coach.getDailyFortune());
+		Coach coach2 = applicationContext.getBean("tennisCoach", Coach.class);
+		
+		boolean theSame = coach1 == coach2;
+		
+		System.out.println("the same: "+theSame);
+		
+		System.out.println("memory coach1: "+coach1);
+		System.out.println("memory coach2: "+coach2);
+		
+//		System.out.println(coach1.getDailyWorkout());
+//		System.out.println(coach.getDailyFortune());
+		
+		
+		applicationContext.close();
 	}
 
 }

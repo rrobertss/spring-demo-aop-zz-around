@@ -8,6 +8,7 @@ package pl.rsof.springdemo;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 /**
@@ -15,7 +16,8 @@ import org.springframework.stereotype.Component;
  * @author RS
  *
  */
-@Component("tennisCoach")
+@Component
+@Scope("prototype")
 public class TennisCoach implements Coach {
 	
 	
