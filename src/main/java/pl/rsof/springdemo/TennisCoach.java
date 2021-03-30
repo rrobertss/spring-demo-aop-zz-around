@@ -6,6 +6,9 @@
  */
 package pl.rsof.springdemo;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
@@ -27,6 +30,20 @@ public class TennisCoach implements Coach {
 	
 	public TennisCoach() {
 		System.out.println("constructor TennisCoach");
+	}
+	
+	
+	// init method
+	@PostConstruct
+	public void someInitMethod() {
+		System.out.println("init method postConstruct");
+	}
+	
+	
+	// destroy method
+	@PreDestroy
+	public void someDestroyMethod() {
+		System.out.println("destroy method: preDestroy");
 	}
 	
 	
