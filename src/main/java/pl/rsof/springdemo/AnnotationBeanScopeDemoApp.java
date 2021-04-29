@@ -33,7 +33,7 @@ public class AnnotationBeanScopeDemoApp {
 		System.out.println("memory coach2: "+coach2);
 		
 //		System.out.println(coach1.getDailyWorkout());
-//		System.out.println(coach.getDailyFortune());
+//		System.out.println(coach.getDailyFortune()); 
 		
 		
 		applicationContext.close();

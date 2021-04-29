@@ -8,6 +8,7 @@ package pl.rsof.springdemo;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 
 /**
  * <p></p><p>30 mar 2021</p>
@@ -16,6 +17,7 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 //@ComponentScan("pl.rsof.springdemo") /* do tennicCoach */
+@PropertySource("classpath:sport.properties")
 public class SportConfig {
 
 	
