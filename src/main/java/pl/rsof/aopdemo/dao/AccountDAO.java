@@ -25,7 +25,15 @@ public class AccountDAO {
 	private String serviceCode;
 	
 	
-	public List<Account>findAccounts(){
+	public List<Account>findAccounts(boolean tripWire){
+		
+		System.out.println("executing findAccounts");
+		
+		// symulacja exception
+		if (tripWire) {
+			throw new RuntimeException("Runtime exception!!!!!!!!!!!!!!");
+		}
+		
 		
 		List<Account>accounts = new ArrayList<>();
 		

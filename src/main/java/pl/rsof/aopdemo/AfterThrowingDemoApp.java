@@ -17,7 +17,7 @@ import pl.rsof.aopdemo.dao.AccountDAO;
  * @author RS
  *
  */
-public class AfterReturningDemoApp {
+public class AfterThrowingDemoApp {
 
 	
 	public static void main(String[] args) {
@@ -27,7 +27,14 @@ public class AfterReturningDemoApp {
 		
 		AccountDAO accountDAO = context.getBean("accountDAO", AccountDAO.class);
 		
-		List<Account>accounts = accountDAO.findAccounts(false);
+		List<Account>accounts = null;
+		
+		try {
+			boolean tripWire = true;
+			accounts = accountDAO.findAccounts(tripWire);	
+		}catch (Exception e) {
+			System.out.println("AfterThrowing, exception: "+e);
+		}
 		
 		System.out.println("Start after findAccounts");
 		System.out.println(accounts);
