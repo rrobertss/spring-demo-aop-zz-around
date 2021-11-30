@@ -13,7 +13,7 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import pl.rsof.aopdemo.service.TrafficFortuneService;
 
 /**
- * <p>Porada @Around</p><p>23 lis 2021</p>
+ * <p>Porada @Around z loggerem (zamieniony System.out.println)</p><p>23 lis 2021</p>
  * @author RS
  *
  */
