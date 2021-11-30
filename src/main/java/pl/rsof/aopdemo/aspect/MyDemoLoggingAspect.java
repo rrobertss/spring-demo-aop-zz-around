@@ -7,11 +7,14 @@
 package pl.rsof.aopdemo.aspect;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.AfterThrowing;
+import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.reflect.MethodSignature;
@@ -31,12 +34,38 @@ import pl.rsof.aopdemo.Account;
 public class MyDemoLoggingAspect {
 
 	
+	private Logger logger = Logger.getLogger(getClass().getName());
+	
+	
+	@Around("execution(* pl.rsof.aopdemo.service.*.getFortune(..))")
+	public Object aroundGetFortune(ProceedingJoinPoint proceedingJoinPoint) throws Throwable{
+		
+		// we are advising here
+		String method = proceedingJoinPoint.getSignature().toShortString();
+		logger.info("Executing @Around on method: " + method);
+		
+		// begin timestamp
+		long begin = System.currentTimeMillis(); 
+		
+		// execute the method
+		Object methodResult = proceedingJoinPoint.proceed();
+		
+		// end timestamp
+		long end = System.currentTimeMillis();
+		
+		// compute duration and display it 
+		long duration = end - begin;
+		logger.info("Duration is "+duration / 1000D + " seconds");
+		
+		return methodResult;
+	}
+	
 	
 	//podata @After - bedzie zawsze - niezaleznie od wyniku operacji (tak jak finally)
 	@After("execution(* pl.rsof.aopdemo.dao.AccountDAO.findAccounts(..))")
 	public void afterFinallyFindAccountsAdvice(JoinPoint joinPoint) {
 		String method = joinPoint.getSignature().toShortString();
-		System.out.println("----->>>>> After (finally), method is "+method);
+		logger.info("----->>>>> After (finally), method is "+method);
 	}
 	
 	
@@ -46,10 +75,10 @@ public class MyDemoLoggingAspect {
 		
 		// method we are advising on
 		String method = joinPoint.getSignature().toShortString();
-		System.out.println("----->>>>> AfterThrowing, method is "+method);
+		logger.info("----->>>>> AfterThrowing, method is "+method);
 		
 		// log the exception
-		System.out.println("----->>>>> AfterThrowing, exception is "+excep);
+		logger.info("----->>>>> AfterThrowing, exception is "+excep);
 	
 	}
 	
@@ -68,10 +97,10 @@ public class MyDemoLoggingAspect {
 		
 		// print method we are advising on
 		String method = joinPoint.getSignature().toShortString();
-		System.out.println("----> Executing AfterReturning: "+method);
+		logger.info("----> Executing AfterReturning: "+method);
 		
 		// print result of the method call
-		System.out.println("----> Result is " + result);
+		logger.info("----> Result is " + result);
 		
 		
 		
@@ -80,7 +109,7 @@ public class MyDemoLoggingAspect {
 		// convert the account names to uppercase;
 		convertAccountNamesToUpperCase(result); 
 		
-		System.out.println("----> Result is (upperCase): " + result);
+		logger.info("----> Result is (upperCase): " + result);
 	}
 		
 		
@@ -96,23 +125,23 @@ public class MyDemoLoggingAspect {
 	//porada before
 	@Before("pl.rsof.aopdemo.aspect.AopExpressions.forDaoPackageNoGetterSetter()")
 	public void beforeAddAccountAdvice(JoinPoint joinPoint) {
-		System.out.println("-----------> Before addAccountAdvice");
+		logger.info("-----------> Before addAccountAdvice");
 		
 		
 		// display the method signature
 		MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
-		System.out.println("Method signature (before): "+methodSignature);
+		logger.info("Method signature (before): "+methodSignature);
 		
 		
 		// display method arguments
 		
 		Object[] args = joinPoint.getArgs();
 		for (Object o : args) {
-			System.out.println("Method argument: "+o);
+			logger.info("Method argument: "+o);
 			
 			if (o instanceof Account) {
 				Account account = (Account) o;
-				System.out.println("Account: "+account.getName()+", "+account.getLevel());
+				logger.info("Account: "+account.getName()+", "+account.getLevel());
 			}
 			
 		}
