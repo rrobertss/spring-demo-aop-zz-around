@@ -9,6 +9,7 @@ package pl.rsof.aopdemo.aspect;
 import java.util.List;
 
 import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Aspect;
@@ -29,6 +30,15 @@ import pl.rsof.aopdemo.Account;
 @Order(1)
 public class MyDemoLoggingAspect {
 
+	
+	
+	//podata @After - bedzie zawsze - niezaleznie od wyniku operacji (tak jak finally)
+	@After("execution(* pl.rsof.aopdemo.dao.AccountDAO.findAccounts(..))")
+	public void afterFinallyFindAccountsAdvice(JoinPoint joinPoint) {
+		String method = joinPoint.getSignature().toShortString();
+		System.out.println("----->>>>> After (finally), method is "+method);
+	}
+	
 	
 	// porada @AfterThrowing
 	@AfterThrowing(pointcut = "execution(* pl.rsof.aopdemo.dao.AccountDAO.findAccounts(..))", throwing = "excep") 
