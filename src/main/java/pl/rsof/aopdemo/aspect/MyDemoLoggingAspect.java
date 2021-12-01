@@ -48,7 +48,21 @@ public class MyDemoLoggingAspect {
 		long begin = System.currentTimeMillis(); 
 		
 		// execute the method
-		Object methodResult = proceedingJoinPoint.proceed();
+		Object methodResult = null;
+		try {
+			methodResult = proceedingJoinPoint.proceed();
+		} catch (Exception e) {
+			// log the exception
+			logger.warning(e.getMessage());
+			
+			// give user a custom message, bez przekazywania wyjatku
+//			methodResult = "Major Accident, but don't worry - glowna czesc aplikacji nawet nie wie o tym bledzie, exception nie jest przekazywany";
+			
+			// wybrac powyższą lub poniższą linię
+			// przekazywanie wyjatku, 
+			throw e;
+		}
+		
 		
 		// end timestamp
 		long end = System.currentTimeMillis();

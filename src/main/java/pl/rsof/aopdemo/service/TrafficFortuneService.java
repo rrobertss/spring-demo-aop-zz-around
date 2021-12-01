@@ -34,6 +34,17 @@ public class TrafficFortuneService {
 		return "Expect heavy traffic this morning";
 		
 	}
+
+	
+	// z obslugą wyjatkow
+	public String getFortune(boolean tripWire) {
+		
+		if (tripWire) {
+			throw new RuntimeException("Exception, Major accident!!!!");
+		}
+		
+		return getFortune();
+	}
 	
 	
 }
